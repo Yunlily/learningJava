@@ -6,7 +6,9 @@ public class bankAcc {
 	String firstName = "Lily";
 	String lastName = "Li";
 	
-	
+	public bankAcc() {
+		
+	}
 	public bankAcc(int accountId, double balance, String firstName, String lastName) {
 		super();
 		this.accountId = accountId;

@@ -106,6 +106,7 @@ public class bankApp {
 					}
 					break;
 				case 5:
+					dc.traceHistory(currUser.getAccountId());
 					break;
 				default:
 					break;

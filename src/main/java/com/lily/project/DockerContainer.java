@@ -14,7 +14,7 @@ public class DockerContainer {
 
 	final static String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
 
-    final static String DB_URL = "jdbc:mysql://localhost:3306/bankDB";
+    final static String DB_URL = "jdbc:mysql://0.0.0.0:3306/bankDB";
 
     final static String USER = "root";
 
@@ -220,7 +220,6 @@ public class DockerContainer {
 
             } catch (SQLException | ClassNotFoundException e) {
 
-
                   e.printStackTrace();
 
             }
@@ -285,7 +284,7 @@ public class DockerContainer {
                 		  
                 		  + "', BALANCE = " + balance + ", MODIFIEDDATE = '" + date
                 		  
-                		  + "', WHERE ID = "
+                		  + "' WHERE ID = "
                 		  
                 		  + accountId + ";";                  
                   
@@ -340,7 +339,7 @@ public class DockerContainer {
                   				
                   				+ "'," + accountId + ");"; 
                   
-                  System.out.println(sql);
+//                  System.out.println(sql);
                   
                   stmt.execute(sql);
 
@@ -354,6 +353,42 @@ public class DockerContainer {
             }
 	}
 	
-	
+	public static void traceHistory(int accountId) {
+		try {
+			 
+            Class.forName("com.mysql.jdbc.Driver");
+
+                  conn = DriverManager.getConnection(DB_URL,USER,PASS);
+
+                  Statement stmt = conn.createStatement();
+                  
+                  String query = "SELECT * FROM HISTORY WHERE ACCOUNTID = " + Integer.toString(accountId) + " ORDER BY ID DESC;";                  
+                  
+                  ResultSet rs = stmt.executeQuery(query);
+                  
+                  System.out.printf("%20s %25s %10s %15s %20s","MODIFIEDDATE","ACTIVITY","STATUS","AMOUNT","FINAL_BALANCE\n");
+                  
+                  while(rs.next()) {
+                	  
+                	  String activity = rs.getString("ACTIVITY");
+                	  
+                	  String amount = rs.getString("AMOUNT");
+                	  
+                	  int balance = rs.getInt("BALANCE");
+                	  
+                	  String status = rs.getString("STATUS");
+                	  
+                	  String date = rs.getString("MODIFIEDDATE");
+                	  
+                	  System.out.printf("%20s %25s %10s %15s %20d\n",date,activity,status,amount,balance);
+                	  
+                  }
+
+            } catch (SQLException | ClassNotFoundException e) {
+
+                  e.printStackTrace();
+
+            }
+	}
 
 }

@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class test {
 	public static void main(String[] args) {
-		bank b1 = new bank();
+		bankAcc b1 = new bankAcc();
 		Scanner myObj = new Scanner(System.in);  // Create a Scanner object
 		System.out.println("Please choose options: 1 for Account Balance, 2 for DepositFunds, 3 for Money Withdrawn and else for exit.");
 		
